@@ -1,0 +1,10 @@
+version: "3.6"
+services:
+  producer:
+    build:
+      context: .
+    environment:
+      SPRING_PROFILES_ACTIVE: Producer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: ""
+      RABBITMQ_ROUTING_KEY: hello
