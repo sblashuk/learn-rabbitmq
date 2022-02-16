@@ -1,36 +1,28 @@
 package com.learn.rabbitmq.configuration;
 
+import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
-@EnableScheduling
-@Profile("Producer")
-public class ProducerConfiguration {
+@AllArgsConstructor
+@EnableConfigurationProperties
+public class CommonConfiguration {
 
-  @Value("${spring.rabbitmq.host}")
-  String host;
-
-  @Value("${spring.rabbitmq.username}")
-  String username;
-
-  @Value("${spring.rabbitmq.password}")
-  String password;
+  private RabbitMqProperties properties;
 
   @Bean
-  CachingConnectionFactory connectionFactory() {
-    CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(host);
-    cachingConnectionFactory.setUsername(username);
-    cachingConnectionFactory.setPassword(password);
-    return cachingConnectionFactory;
+  public ConnectionFactory connectionFactory() {
+    CachingConnectionFactory connectionFactory = new CachingConnectionFactory(properties.getHost());
+    connectionFactory.setUsername(properties.getUsername());
+    connectionFactory.setPassword(properties.getPassword());
+    return connectionFactory;
   }
 
   @Bean

@@ -4,7 +4,17 @@ services:
     build:
       context: .
     environment:
-      SPRING_PROFILES_ACTIVE: Producer
+      SPRING_PROFILES_ACTIVE: HelloWorld,Producer
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_EXCHANGE: ""
-      RABBITMQ_ROUTING_KEY: hello
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: greeting
+  consumer:
+    build:
+      context: .
+    environment:
+      SPRING_PROFILES_ACTIVE: HelloWorld,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: ""
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: greeting

@@ -11,6 +11,7 @@ run-hw: DOCKER_COMPOSE_FILES += -f docker-compose.hello-world.yml
 run-hw:
 	${DOCKER_COMPOSE} up --build -d
 
+stop-hw: DOCKER_COMPOSE_FILES += -f docker-compose.hello-world.yml
 stop-hw:
 	${DOCKER_COMPOSE} down
 
