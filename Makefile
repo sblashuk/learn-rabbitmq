@@ -29,6 +29,16 @@ stop-wq:
 
 .PHONY: run-wq stop-wq
 
+run-ps: DOCKER_COMPOSE_FILES += -f docker-compose.publish-subscribe.yml
+run-ps:
+	${DOCKER_COMPOSE} up --build -d
+
+stop-ps: DOCKER_COMPOSE_FILES += -f docker-compose.publish-subscribe.yml
+stop-ps:
+	${DOCKER_COMPOSE} down
+
+.PHONY: run-ps stop-ps
+
 open-web:
 	@open http://localhost:15672
 

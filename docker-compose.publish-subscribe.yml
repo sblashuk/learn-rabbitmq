@@ -1,0 +1,58 @@
+version: "3.6"
+services:
+  producer:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: PublishSubscribe,Producer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: "logs"
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: ""
+  subscriber-1:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: PublishSubscribe,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: "logs"
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: ""
+  subscriber-2:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: PublishSubscribe,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: "logs"
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: ""
+  subscriber-3:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: PublishSubscribe,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: "logs"
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: ""

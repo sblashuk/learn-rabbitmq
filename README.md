@@ -34,3 +34,12 @@ To stop
 ```bash
 make stop-wq
 ```
+
+To start ["Publish/Subscribe"](https://www.rabbitmq.com/tutorials/tutorial-three-java.html) example:
+```bash
+make run-ps
+```
+To stop
+```bash
+make stop-ps
+```
