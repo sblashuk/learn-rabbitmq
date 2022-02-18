@@ -3,6 +3,11 @@ services:
   producer:
     build:
       context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
     environment:
       SPRING_PROFILES_ACTIVE: HelloWorld,Producer
       RABBITMQ_HOST: rabbitmq
@@ -12,6 +17,11 @@ services:
   consumer:
     build:
       context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
     environment:
       SPRING_PROFILES_ACTIVE: HelloWorld,Consumer
       RABBITMQ_HOST: rabbitmq

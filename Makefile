@@ -7,6 +7,8 @@ run:
 stop:
 	${DOCKER_COMPOSE} down
 
+.PHONY: run stop
+
 run-hw: DOCKER_COMPOSE_FILES += -f docker-compose.hello-world.yml
 run-hw:
 	${DOCKER_COMPOSE} up --build -d
@@ -15,5 +17,19 @@ stop-hw: DOCKER_COMPOSE_FILES += -f docker-compose.hello-world.yml
 stop-hw:
 	${DOCKER_COMPOSE} down
 
+.PHONY: run-hw stop-hw
+
+run-wq: DOCKER_COMPOSE_FILES += -f docker-compose.work-queues.yml
+run-wq:
+	${DOCKER_COMPOSE} up --build -d
+
+stop-wq: DOCKER_COMPOSE_FILES += -f docker-compose.work-queues.yml
+stop-wq:
+	${DOCKER_COMPOSE} down
+
+.PHONY: run-wq stop-wq
+
 open-web:
 	@open http://localhost:15672
+
+.PHONY: open-web

@@ -1,5 +1,6 @@
 package com.learn.rabbitmq.configuration;
 
+import com.learn.rabbitmq.service.WorkQueuesService;
 import com.learn.rabbitmq.utils.RabbitMQFactory;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Delivery;
@@ -17,8 +18,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 @AllArgsConstructor
-@Profile("HelloWorld")
-public class HelloWorldConfiguration {
+@Profile("WorkQueues")
+public class WorkQueuesConfiguration {
 
   private static final Logger logger = LoggerFactory.getLogger(HelloWorldConfiguration.class);
 
@@ -33,7 +34,7 @@ public class HelloWorldConfiguration {
   @Bean
   @Profile("Consumer")
   public Channel channelConsumer(Connection connection) throws IOException {
-    return RabbitMQFactory.simpleConsumerChannelBuilder(connection, properties.getQueue(), this::printMessageCallback);
+    return RabbitMQFactory.simpleConsumerChannelBuilder(connection, properties.getQueue(), this::startWorkConsumer);
   }
 
   @Bean
@@ -42,7 +43,10 @@ public class HelloWorldConfiguration {
     return RabbitMQFactory.simpleProducerChannelBuilder(connection, properties.getQueue());
   }
 
-  private void printMessageCallback(String consumerTag, Delivery delivery) {
-    logger.info("Received new message: " + new String(delivery.getBody()));
+  private void startWorkConsumer(String consumerTag, Delivery delivery) {
+    String msg = new String(delivery.getBody());
+    logger.info("Received new msg: " + msg);
+    WorkQueuesService.doWork(msg);
+    logger.info("Finished processing msg: " + msg);
   }
 }

@@ -1,0 +1,44 @@
+version: "3.6"
+services:
+  producer:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: WorkQueues,Producer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: ""
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: tasks
+  worker-1:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: WorkQueues,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: ""
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: tasks
+  worker-2:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: WorkQueues,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: ""
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: tasks

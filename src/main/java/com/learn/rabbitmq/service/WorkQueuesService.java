@@ -1,6 +1,5 @@
 package com.learn.rabbitmq.service;
 
-import com.learn.rabbitmq.configuration.HelloWorldConfiguration;
 import com.learn.rabbitmq.configuration.RabbitMqProperties;
 import com.rabbitmq.client.Channel;
 import java.io.IOException;
@@ -14,19 +13,31 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-@Profile("HelloWorld & Producer")
-public class HelloWorldSenderService {
+@Profile({"WorkQueues & Producer"})
+public class WorkQueuesService {
 
-  private static final Logger logger = LoggerFactory.getLogger(HelloWorldConfiguration.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkQueuesService.class);
   private static final String[] NAMES = {"Siarhei", "World", "Bob"};
+  private static final String KEY_WORD = "Process:";
 
   private RabbitMqProperties properties;
   private Channel channel;
 
   @Scheduled(fixedRate = 1000)
   public void scheduleSendingMessages() throws IOException {
-    String message = String.format("Hello, %s!", NAMES[new Random().nextInt(NAMES.length)]);
+    String message = KEY_WORD + NAMES[new Random().nextInt(NAMES.length)];
     logger.info("Sending message: " + message);
     channel.basicPublish("", properties.getQueue(), null, message.getBytes());
+  }
+
+  public static void doWork(String msg) {
+    for (char ch : msg.replace(KEY_WORD, "").toCharArray()) {
+      try {
+        logger.info("Processing: " + ch);
+        Thread.sleep(1000);
+      } catch (InterruptedException _ignored) {
+        Thread.currentThread().interrupt();
+      }
+    }
   }
 }
