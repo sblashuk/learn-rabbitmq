@@ -43,3 +43,12 @@ To stop
 ```bash
 make stop-ps
 ```
+
+To start ["Routing"](https://www.rabbitmq.com/tutorials/tutorial-four-java.html) example:
+```bash
+make run-ps
+```
+To stop
+```bash
+make stop-ps
+```

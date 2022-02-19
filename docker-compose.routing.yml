@@ -1,0 +1,72 @@
+version: "3.6"
+services:
+  producer:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: Routing,Producer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: direct_logs
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: ""
+  consumer-log-error:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: Routing,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: direct_logs
+      RABBITMQ_ROUTING_KEY: error
+      RABBITMQ_QUEUE: ""
+  consumer-log-info-debug:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: Routing,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: direct_logs
+      RABBITMQ_ROUTING_KEY: info,debug
+      RABBITMQ_QUEUE: ""
+  consumer-all:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: Routing,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: direct_logs
+      RABBITMQ_ROUTING_KEY: error,info,debug,warning
+      RABBITMQ_QUEUE: ""
+  consumer-warning:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: Routing,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: direct_logs
+      RABBITMQ_ROUTING_KEY: warning
+      RABBITMQ_QUEUE: ""

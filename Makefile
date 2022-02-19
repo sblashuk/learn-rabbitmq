@@ -39,6 +39,15 @@ stop-ps:
 
 .PHONY: run-ps stop-ps
 
+run-r: DOCKER_COMPOSE_FILES += -f docker-compose.routing.yml
+run-r:
+	${DOCKER_COMPOSE} up --build -d
+
+stop-r: DOCKER_COMPOSE_FILES += -f docker-compose.routing.yml
+stop-r:
+	${DOCKER_COMPOSE} down
+
+.PHONY: run-ps stop-ps
 open-web:
 	@open http://localhost:15672
 
