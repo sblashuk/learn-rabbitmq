@@ -18,15 +18,15 @@ import org.springframework.stereotype.Service;
 public class HelloWorldSenderService {
 
   private static final Logger logger = LoggerFactory.getLogger(HelloWorldConfiguration.class);
-  private static final String[] NAMES = {"Siarhei", "World", "Bob"};
 
   private RabbitMqProperties properties;
   private Channel channel;
+  private MessageService messageService;
 
   @Scheduled(fixedRate = 1000)
   public void scheduleSendingMessages() throws IOException {
-    String message = String.format("Hello, %s!", NAMES[new Random().nextInt(NAMES.length)]);
-    logger.info("Sending message: " + message);
-    channel.basicPublish("", properties.getQueue(), null, message.getBytes());
+    String msg = messageService.generateHelloMessage();
+    logger.info("Sending Message: " + msg);
+    channel.basicPublish(properties.getExchange(), properties.getQueue(), null, msg.getBytes());
   }
 }

@@ -26,11 +26,6 @@ public class PublishSubscribeConfiguration {
   public RabbitMqProperties properties;
 
   @Bean
-  public Connection connection() {
-    return connectionFactory.createConnection();
-  }
-
-  @Bean
   @Profile("Consumer")
   public Channel channelConsumer(Connection connection) throws IOException {
     Channel channel = connection.createChannel(false);

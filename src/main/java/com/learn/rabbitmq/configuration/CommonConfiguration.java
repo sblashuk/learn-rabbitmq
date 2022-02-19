@@ -2,6 +2,7 @@ package com.learn.rabbitmq.configuration;
 
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.Connection;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -35,5 +36,10 @@ public class CommonConfiguration {
     final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
     rabbitTemplate.setMessageConverter(messageConverter);
     return rabbitTemplate;
+  }
+
+  @Bean
+  public Connection connection(ConnectionFactory connectionFactory) {
+    return connectionFactory.createConnection();
   }
 }

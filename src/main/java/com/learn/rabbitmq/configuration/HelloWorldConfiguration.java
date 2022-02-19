@@ -26,11 +26,6 @@ public class HelloWorldConfiguration {
   public RabbitMqProperties properties;
 
   @Bean
-  public Connection connection() {
-    return connectionFactory.createConnection();
-  }
-
-  @Bean
   @Profile("Consumer")
   public Channel channelConsumer(Connection connection) throws IOException {
     return RabbitMQFactory.simpleConsumerChannelBuilder(connection, properties.getQueue(), this::printMessageCallback);
