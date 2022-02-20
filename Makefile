@@ -47,7 +47,7 @@ stop-r: DOCKER_COMPOSE_FILES += -f docker-compose.routing.yml
 stop-r:
 	${DOCKER_COMPOSE} down
 
-.PHONY: run-ps stop-ps
+.PHONY: run-r stop-r
 
 run-t: DOCKER_COMPOSE_FILES += -f docker-compose.topics.yml
 run-t:
@@ -57,7 +57,7 @@ stop-t: DOCKER_COMPOSE_FILES += -f docker-compose.topics.yml
 stop-t:
 	${DOCKER_COMPOSE} down
 
-.PHONY: run-ps stop-ps
+.PHONY: run-t stop-t
 
 open-web:
 	@open http://localhost:15672
