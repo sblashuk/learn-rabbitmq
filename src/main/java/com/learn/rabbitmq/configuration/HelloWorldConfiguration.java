@@ -1,5 +1,6 @@
 package com.learn.rabbitmq.configuration;
 
+import com.learn.rabbitmq.configuration.properties.RabbitMqProperties;
 import com.learn.rabbitmq.utils.RabbitMQFactory;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Delivery;
@@ -28,13 +29,13 @@ public class HelloWorldConfiguration {
   @Bean
   @Profile("Consumer")
   public Channel channelConsumer(Connection connection) throws IOException {
-    return RabbitMQFactory.simpleConsumerChannelBuilder(connection, properties.getQueue(), this::printMessageCallback);
+    return RabbitMQFactory.simpleConsumerChannelBuilder(connection, properties, this::printMessageCallback);
   }
 
   @Bean
   @Profile("Producer")
   public Channel channelProducer(Connection connection) throws IOException {
-    return RabbitMQFactory.simpleProducerChannelBuilder(connection, properties.getQueue());
+    return RabbitMQFactory.simpleProducerChannelBuilder(connection, properties);
   }
 
   private void printMessageCallback(String consumerTag, Delivery delivery) {

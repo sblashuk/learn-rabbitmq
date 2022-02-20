@@ -1,5 +1,6 @@
 package com.learn.rabbitmq.configuration;
 
+import com.learn.rabbitmq.configuration.properties.RabbitMqProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.Connection;

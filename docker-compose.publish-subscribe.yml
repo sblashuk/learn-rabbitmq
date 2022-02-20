@@ -14,6 +14,7 @@ services:
       RABBITMQ_EXCHANGE: "logs"
       RABBITMQ_ROUTING_KEY: ""
       RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: fanout
   subscriber-1:
     build:
       context: .
@@ -28,6 +29,7 @@ services:
       RABBITMQ_EXCHANGE: "logs"
       RABBITMQ_ROUTING_KEY: ""
       RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: fanout
   subscriber-2:
     build:
       context: .
@@ -42,6 +44,7 @@ services:
       RABBITMQ_EXCHANGE: "logs"
       RABBITMQ_ROUTING_KEY: ""
       RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: fanout
   subscriber-3:
     build:
       context: .
@@ -56,3 +59,4 @@ services:
       RABBITMQ_EXCHANGE: "logs"
       RABBITMQ_ROUTING_KEY: ""
       RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: fanout

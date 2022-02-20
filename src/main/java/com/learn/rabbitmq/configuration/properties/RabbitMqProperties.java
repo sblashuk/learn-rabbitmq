@@ -1,4 +1,4 @@
-package com.learn.rabbitmq.configuration;
+package com.learn.rabbitmq.configuration.properties;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,8 @@ public class RabbitMqProperties {
   private String host;
   private String queue;
   private String exchange;
-  private String routingkey;
+  private String routingKey;
   private String username;
   private String password;
+  private String exchangeType;
 }

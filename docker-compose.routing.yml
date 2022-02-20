@@ -14,6 +14,7 @@ services:
       RABBITMQ_EXCHANGE: direct_logs
       RABBITMQ_ROUTING_KEY: ""
       RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: direct
   consumer-log-error:
     build:
       context: .
@@ -28,6 +29,7 @@ services:
       RABBITMQ_EXCHANGE: direct_logs
       RABBITMQ_ROUTING_KEY: error
       RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: direct
   consumer-log-info-debug:
     build:
       context: .
@@ -42,6 +44,7 @@ services:
       RABBITMQ_EXCHANGE: direct_logs
       RABBITMQ_ROUTING_KEY: info,debug
       RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: direct
   consumer-all:
     build:
       context: .
@@ -56,6 +59,7 @@ services:
       RABBITMQ_EXCHANGE: direct_logs
       RABBITMQ_ROUTING_KEY: error,info,debug,warning
       RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: direct
   consumer-warning:
     build:
       context: .
@@ -70,3 +74,4 @@ services:
       RABBITMQ_EXCHANGE: direct_logs
       RABBITMQ_ROUTING_KEY: warning
       RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: direct

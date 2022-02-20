@@ -1,0 +1,93 @@
+version: "3.6"
+services:
+  producer:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: Topics,Producer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: topic_logs
+      RABBITMQ_ROUTING_KEY: kern.critical
+      RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: topic
+
+  consumer-all:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: Topics,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: topic_logs
+      RABBITMQ_ROUTING_KEY: "#"
+      RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: topic
+  consumer-kern:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: Topics,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: topic_logs
+      RABBITMQ_ROUTING_KEY: "kern.*"
+      RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: topic
+  consumer-critical:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: Topics,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: topic_logs
+      RABBITMQ_ROUTING_KEY: "*.critical"
+      RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: topic
+  consumer-multiple:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: Topics,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: topic_logs
+      RABBITMQ_ROUTING_KEY: "kern.*,*.critical"
+      RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: topic
+  consumer-non-critical:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: Topics,Consumer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: topic_logs
+      RABBITMQ_ROUTING_KEY: "*.debug,*.warn,*.notice,*.info"
+      RABBITMQ_QUEUE: ""
+      RABBITMQ_EXCHANGE_TYPE: topic

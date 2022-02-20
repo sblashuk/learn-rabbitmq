@@ -1,7 +1,6 @@
-package com.learn.rabbitmq.service;
+package com.learn.rabbitmq.sender;
 
-import com.learn.rabbitmq.configuration.RabbitMqProperties;
-import com.rabbitmq.client.Channel;
+import com.learn.rabbitmq.service.MessageQueueService;
 import java.io.IOException;
 import java.util.Random;
 import lombok.AllArgsConstructor;
@@ -14,20 +13,21 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 @Profile({"WorkQueues & Producer"})
-public class WorkQueuesService {
+public class WorkQueuesSender {
 
-  private static final Logger logger = LoggerFactory.getLogger(WorkQueuesService.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkQueuesSender.class);
   private static final String[] NAMES = {"Siarhei", "World", "Bob"};
   private static final String KEY_WORD = "Process:";
 
-  private RabbitMqProperties properties;
-  private Channel channel;
+  private MessageQueueService messageQueueService;
 
   @Scheduled(fixedRate = 1000)
   public void scheduleSendingMessages() throws IOException {
-    String message = KEY_WORD + NAMES[new Random().nextInt(NAMES.length)];
-    logger.info("Sending message: " + message);
-    channel.basicPublish("", properties.getQueue(), null, message.getBytes());
+    messageQueueService.sentToQueue(buildMessage());
+  }
+
+  private String buildMessage() {
+    return KEY_WORD + NAMES[new Random().nextInt(NAMES.length)];
   }
 
   public static void doWork(String msg) {

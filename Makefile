@@ -48,6 +48,17 @@ stop-r:
 	${DOCKER_COMPOSE} down
 
 .PHONY: run-ps stop-ps
+
+run-t: DOCKER_COMPOSE_FILES += -f docker-compose.topics.yml
+run-t:
+	${DOCKER_COMPOSE} up --build -d
+
+stop-t: DOCKER_COMPOSE_FILES += -f docker-compose.topics.yml
+stop-t:
+	${DOCKER_COMPOSE} down
+
+.PHONY: run-ps stop-ps
+
 open-web:
 	@open http://localhost:15672
 
