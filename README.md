@@ -61,3 +61,12 @@ To stop
 ```bash
 make stop-t
 ```
+
+To start ["RPC"](https://www.rabbitmq.com/tutorials/tutorial-six-java.html) example:
+```bash
+make run-rpc
+```
+To stop
+```bash
+make stop-rpc
+```

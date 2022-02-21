@@ -59,6 +59,15 @@ stop-t:
 
 .PHONY: run-t stop-t
 
+run-rpc: DOCKER_COMPOSE_FILES += -f docker-compose.rpc.yml
+run-rpc:
+	${DOCKER_COMPOSE} up --build -d --scale producer=3
+
+stop-rpc: DOCKER_COMPOSE_FILES += -f docker-compose.rpc.yml
+stop-rpc:
+	${DOCKER_COMPOSE} down
+
+.PHONY: run-rpc stop-rpc
 open-web:
 	@open http://localhost:15672
 
