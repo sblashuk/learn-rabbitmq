@@ -5,6 +5,7 @@ import static java.lang.String.format;
 import com.learn.rabbitmq.configuration.properties.RabbitMqProperties;
 import com.rabbitmq.client.Channel;
 import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,5 +34,10 @@ public class MessageQueueService {
 
   public void sentToQueue(String message) throws IOException {
     sent(properties.getQueue(), message);
+  }
+
+  public void sentToQueueAndWait(String message) throws IOException, InterruptedException, TimeoutException {
+    sent(properties.getQueue(), message);
+    channel.waitForConfirmsOrDie(5_000);
   }
 }

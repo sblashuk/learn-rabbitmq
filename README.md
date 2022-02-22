@@ -70,3 +70,12 @@ To stop
 ```bash
 make stop-rpc
 ```
+
+To start ["Publisher Confirms"](https://www.rabbitmq.com/tutorials/tutorial-seven-java.html) example:
+```bash
+make run-rpc
+```
+To stop
+```bash
+make stop-rpc
+```

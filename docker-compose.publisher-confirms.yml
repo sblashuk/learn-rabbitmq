@@ -1,0 +1,48 @@
+version: "3.6"
+services:
+  producer-individually:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: PublisherConfirms,Individually,Producer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: ""
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: "individually_logs"
+      RABBITMQ_EXCHANGE_TYPE: ""
+  producer-batch:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: PublisherConfirms,Batch,Producer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: ""
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: "batch_logs"
+      RABBITMQ_EXCHANGE_TYPE: ""
+  producer-async:
+    build:
+      context: .
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    environment:
+      SPRING_PROFILES_ACTIVE: PublisherConfirms,Async,Producer
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_EXCHANGE: ""
+      RABBITMQ_ROUTING_KEY: ""
+      RABBITMQ_QUEUE: "async_logs"
+      RABBITMQ_EXCHANGE_TYPE: ""
+

@@ -68,6 +68,17 @@ stop-rpc:
 	${DOCKER_COMPOSE} down
 
 .PHONY: run-rpc stop-rpc
+
+run-pc: DOCKER_COMPOSE_FILES += -f docker-compose.publisher-confirms.yml
+run-pc:
+	${DOCKER_COMPOSE} up --build -d
+
+stop-pc: DOCKER_COMPOSE_FILES += -f docker-compose.publisher-confirms.yml
+stop-pc:
+	${DOCKER_COMPOSE} down
+
+.PHONY: run-pc stop-pc
+
 open-web:
 	@open http://localhost:15672
 

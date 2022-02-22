@@ -1,7 +1,6 @@
 package com.learn.rabbitmq.configuration;
 
 import com.learn.rabbitmq.configuration.properties.RabbitMqProperties;
-import com.learn.rabbitmq.utils.RabbitMQFactory;
 import com.rabbitmq.client.Channel;
 import java.io.IOException;
 import lombok.AllArgsConstructor;
@@ -14,20 +13,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 @AllArgsConstructor
-@Profile("PublishSubscribe | Routing | Topics")
-public class ExchangeTypesConfiguration {
+@Profile("PublisherConfirms")
+public class PublisherConfirmsConfiguration {
 
   public RabbitMqProperties properties;
 
   @Bean
-  @Profile("Consumer")
-  public Channel channelConsumer(Connection connection) throws IOException {
-    return RabbitMQFactory.buildConsumerChannel(connection, properties);
-  }
-
-  @Bean
   @Profile("Producer")
   public Channel channelProducer(Connection connection) throws IOException {
-    return RabbitMQFactory.buildProducerChannel(connection, properties);
+    Channel channel = connection.createChannel(false);
+    channel.queueDeclare(properties.getQueue(), false, false, true, null);
+    channel.confirmSelect();
+    return channel;
   }
 }
